@@ -1,0 +1,16 @@
+{
+  "name": "i18n_verify",
+  "version": "1.0.0",
+  "description": "Verify i18n labels that aren't used any more",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "i18n",
+    "labels",
+    "verify"
+  ],
+  "author": "Fabiano Fonseca de Freitas",
+  "license": "MIT"
+}
