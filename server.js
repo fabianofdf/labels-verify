@@ -19,5 +19,5 @@ app.get("/analyse", function(req, res){
 
 app.listen(port, host);
 
-console.log("Server started!");
-console.log("localhost:"+port);
+console.log("i18n Verify Server started!");
+console.log("Access: 'localhost:"+port+"'");

@@ -82,6 +82,8 @@
           labels = data;
           currentLabels = labels.filter(item => item.uses === 0);
           loadList();
+        }).catch(err => {
+          console.log(err);
         });
 
     </script>
