@@ -23,7 +23,8 @@
       <h4>Verifying...</h4>
     </div>
     <div class="container d-none" id="result">
-      <h4>Total: <label id="total"></label></h4>
+      <h4>Total labels: <label id="total_labels"></label></h4>
+      <h4>Total words: <label id="total_words"></label></h4>
 
       <p>
         <a href="#" id="filter-not-useds">Unused labels</a> -
@@ -33,7 +34,8 @@
       <ul class="list-group" id="list"></ul>
     </div>
     <script type="text/javascript">
-      let total = document.getElementById('total');
+      let totalLabels = document.getElementById('total_labels');
+      let totalWords = document.getElementById('total_words');
       let list = document.getElementById('list');
       let linkAll = document.getElementById('filter-all');
       let linkNotUseds = document.getElementById('filter-not-useds');
@@ -55,11 +57,15 @@
 
       let loadList = () => {
         setLoading(true);
-        total.innerHTML = currentLabels.length;
+        totalLabels.innerHTML = currentLabels.length;
+        totalWords.innerHTML = currentLabels.reduce((total, item) => {
+          total += item.text.split(" ").length;
+          return total;
+        }, 0);
         list.innerHTML = currentLabels.reduce((html, item) => (
           html+=`
             <li class="list-group-item">
-              ${item.text}
+              <strong>${item.label}</strong> - ${item.text}
               <span class="badge badge-${item.uses ? 'success' : 'warning'}">${item.uses}</span>
             </li>`
         ), '');
