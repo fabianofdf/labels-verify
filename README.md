@@ -2,7 +2,15 @@
 Verify i18n labels that aren't used any more
 
 ## Instructions
-* Install - npm Install
-* Config - Open config.js and configure the paths
-* Run - npm start
-* Access - localhost:8080
+* Open `config.json` and set the paths to language files and the files to be searchable
+
+* Run
+```sh
+npm install
+```
+
+```sh
+npm start
+```
+
+* Access - [localhost:8080](http://localhost:8080)
