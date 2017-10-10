@@ -20,5 +20,9 @@ app.get("/analyse", function(req, res){
 
 app.listen(port, host);
 
-exec('open http://localhost:' + port)
 console.log("i18n Verify Server running in localhost:"+port+"!");
+
+var command = 'open';
+(process.platform === 'linux') && (command='xdg-open');
+
+exec(command + ' http://localhost:' + port);
