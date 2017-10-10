@@ -26,8 +26,8 @@
       <h4>Total: <label id="total"></label></h4>
 
       <p>
-        <a href="#" id="filter-all">All</a> -
-        <a href="#" id="filter-not-useds">Only not used</a>
+        <a href="#" id="filter-not-useds">Unused labels</a> -
+        <a href="#" id="filter-all">All</a>
       </p>
 
       <ul class="list-group" id="list"></ul>
@@ -79,7 +79,8 @@
       fetch('/analyse')
         .then(resp => resp.json())
         .then(data => {
-          currentLabels = labels = data;
+          labels = data;
+          currentLabels = labels.filter(item => item.uses === 0);
           loadList();
         });
 
