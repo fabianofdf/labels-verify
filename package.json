@@ -4,6 +4,7 @@
   "description": "Verify i18n labels that aren't used any more",
   "main": "main.js",
   "scripts": {
+    "start": "node server",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
@@ -12,5 +13,8 @@
     "verify"
   ],
   "author": "Fabiano Fonseca de Freitas",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.16.1"
+  }
 }

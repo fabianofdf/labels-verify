@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>i18n Labels Verify</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <style media="screen">
+      .header{background-color: #eee;}
+      .badge-success{color:#fff; background-color: #28a745;}
+      .badge-warning{color:#111; background-color: #ffc107;}
+      .d-block{display: block;}
+      .d-none{display: none;}
+    </style>
+  </head>
+  <body>
+    <div class="header">
+      <div class="container">
+        <h1 class="display-5">i18n Labels Verify</h1>
+        <p>Verify i18n labels that aren't used any more</p>
+      </div>
+    </div>
+    <div class="container d-block" id="loading">
+      <h4>Verifying...</h4>
+    </div>
+    <div class="container d-none" id="result">
+      <h4>Total: <label id="total"></label></h4>
+
+      <p>
+        <a href="#" id="filter-all">All</a> -
+        <a href="#" id="filter-not-useds">Only not used</a>
+      </p>
+
+      <ul class="list-group" id="list"></ul>
+    </div>
+    <script type="text/javascript">
+      let total = document.getElementById('total');
+      let list = document.getElementById('list');
+      let linkAll = document.getElementById('filter-all');
+      let linkNotUseds = document.getElementById('filter-not-useds');
+      let containerLoading = document.getElementById('loading');
+      let containerResult = document.getElementById('result');
+
+      let labels;
+      let currentLabels;
+
+      let setLoading = (opt) => {
+        if (opt) {
+          containerLoading.className = 'container d-block';
+          containerResult.className = 'container d-none';
+        } else {
+          containerLoading.className = 'container d-none';
+          containerResult.className = 'container d-block';
+        }
+      };
+
+      let loadList = () => {
+        setLoading(true);
+        total.innerHTML = currentLabels.length;
+        list.innerHTML = currentLabels.reduce((html, item) => (
+          html+=`
+            <li class="list-group-item">
+              ${item.text}
+              <span class="badge badge-${item.uses ? 'success' : 'warning'}">${item.uses}</span>
+            </li>`
+        ), '');
+        setLoading(false);
+      };
+
+      linkAll.addEventListener("click", () => {
+        currentLabels = labels;
+        loadList();
+      });
+
+      linkNotUseds.addEventListener('click', () => {
+        currentLabels = labels.filter(item => item.uses === 0);
+        loadList();
+      });
+
+      fetch('/analyse')
+        .then(resp => resp.json())
+        .then(data => {
+          currentLabels = labels = data;
+          loadList();
+        });
+
+    </script>
+  </body>
+</html>
