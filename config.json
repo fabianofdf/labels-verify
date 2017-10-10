@@ -1,0 +1,25 @@
+{
+  "path": {
+    "lang": "/home/fabianofdf/dev/projects/repo/hot-vulcano/languages/pt-BR.i18n.json",
+    "files": "/home/fabianofdf/dev/projects/repo/hot-vulcano/imports/client"
+  },
+
+  "ignoreLabels": [
+    "alerts.",
+    "badges.",
+    "category.",
+    "collaborators_area.",
+    "country.",
+    "currencies.",
+    "error.",
+    "hotleads2.errors.",
+    "integrations.account.",
+    "language.",
+    "order.checkout.orderprocessor.",
+    "placeholders.",
+    "providers.",
+    "status.",
+    "subcategory.",
+    "tracking_pixel.provider."
+  ]
+}
