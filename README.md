@@ -2,8 +2,6 @@
 Verify i18n labels that aren't used any more
 
 ## Instructions
-* Open `config.json` and set the paths to language files and the files to be searchable
-
 * Run
 ```sh
 npm install
