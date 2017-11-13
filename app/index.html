@@ -5,11 +5,14 @@
     <title>i18n Labels Verify</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <style media="screen">
-      .header{background-color: #eee;}
-      .badge-success{color:#fff; background-color: #28a745;}
-      .badge-warning{color:#111; background-color: #ffc107;}
+      .header{background-color: #eee;margin-bottom: 10px;}
+      .list-group-item{display: flex; align-items: center;}
+      .list-group-item span:first-child{flex: 1;}
+      .badge-success{color: #fff; background-color: #28a745;}
+      .badge-warning{color: #111; background-color: #ffc107;}
       .d-block{display: block;}
       .d-none{display: none;}
+      .form{margin:15px auto;}
     </style>
   </head>
   <body>
@@ -19,28 +22,46 @@
         <p>Verify i18n labels that aren't used any more</p>
       </div>
     </div>
-    <div class="container d-block" id="loading">
-      <h4>Verifying...</h4>
+    <div class="container form">
+      <form id="form">
+        <div class="form-group">
+          <label for="langPath">Lang File Path</label>
+          <input type="text" class="form-control" id="langPath" name="langPath" placeholder="e.g. /home/projects/hotmart/hot-vulcano/languages/pt-BR.i18n.json">
+        </div>
+        <div class="form-group">
+          <label for="baseDirPath">Root Directory Path</label>
+          <input type="text" class="form-control" id="baseDirPath" name="baseDirPath" placeholder="e.g. /home/projects/hotmart/hot-vulcano/imports/client">
+        </div>
+        <button type="button" id="submit" class="btn btn-primary">Submit</button>
+      </form>
     </div>
+    <div class="container d-none" id="loading"></div>
     <div class="container d-none" id="result">
-      <h4>Total labels: <label id="total_labels"></label></h4>
-      <h4>Total words: <label id="total_words"></label></h4>
-
-      <p>
-        <a href="#" id="filter-not-useds">Unused labels</a> -
-        <a href="#" id="filter-all">All</a>
-      </p>
-
+      <div class="row">
+        <div class="col-xs-6">
+          <span>Total labels: <label id="total_labels"></label></span> -
+          <span>Total words: <label id="total_words"></label></span>
+        </div>
+        <div class="col-xs-6 text-right">
+          <a href="#" id="filter-not-useds">Unused labels</a> -
+          <a href="#" id="filter-all">All</a>
+        </div>
+      </div>
       <ul class="list-group" id="list"></ul>
     </div>
     <script type="text/javascript">
-      let totalLabels = document.getElementById('total_labels');
-      let totalWords = document.getElementById('total_words');
-      let list = document.getElementById('list');
-      let linkAll = document.getElementById('filter-all');
-      let linkNotUseds = document.getElementById('filter-not-useds');
-      let containerLoading = document.getElementById('loading');
-      let containerResult = document.getElementById('result');
+      const ge = id => document.getElementById(id);
+      let totalLabels = ge('total_labels');
+      let totalWords = ge('total_words');
+      let list = ge('list');
+      let linkAll = ge('filter-all');
+      let linkNotUseds = ge('filter-not-useds');
+      let containerLoading = ge('loading');
+      let containerResult = ge('result');
+      let submitButton = ge('submit');
+
+      ge('langPath').value = localStorage.getItem('langPath') || '';
+      ge('baseDirPath').value = localStorage.getItem('baseDirPath') || "";
 
       let labels;
       let currentLabels;
@@ -48,6 +69,7 @@
       let setLoading = (opt) => {
         if (opt) {
           containerLoading.className = 'container d-block';
+          containerLoading.innerHTML = '<h4>Verifying...</h4>';
           containerResult.className = 'container d-none';
         } else {
           containerLoading.className = 'container d-none';
@@ -56,7 +78,6 @@
       };
 
       let loadList = () => {
-        setLoading(true);
         totalLabels.innerHTML = currentLabels.length;
         totalWords.innerHTML = currentLabels.reduce((total, item) => {
           total += item.text.split(" ").length;
@@ -65,32 +86,57 @@
         list.innerHTML = currentLabels.reduce((html, item) => (
           html+=`
             <li class="list-group-item">
-              <strong>${item.label}</strong> - ${item.text}
+              <span><strong>${item.label}</strong> - ${item.text}</span>
               <span class="badge badge-${item.uses ? 'success' : 'warning'}">${item.uses}</span>
             </li>`
         ), '');
         setLoading(false);
       };
 
-      linkAll.addEventListener("click", () => {
+      let loadAll = () => {
         currentLabels = labels;
         loadList();
-      });
+      };
 
-      linkNotUseds.addEventListener('click', () => {
+      let loadUnused = () => {
         currentLabels = labels.filter(item => item.uses === 0);
         loadList();
-      });
+      };
 
-      fetch('/analyse')
-        .then(resp => resp.json())
-        .then(data => {
-          labels = data;
-          currentLabels = labels.filter(item => item.uses === 0);
-          loadList();
+      let verify = () => {
+        localStorage.setItem('langPath', form.langPath.value);
+        localStorage.setItem('baseDirPath', form.baseDirPath.value);
+
+        setLoading(true);
+        fetch('/analyse',{
+          method: "post",
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            langPath: form.langPath.value,
+            baseDirPath: form.baseDirPath.value
+          })
+        }).then(resp => {
+          if(resp.ok){
+            resp.json().then(function(resp) {
+              labels = resp
+              loadUnused();
+            })
+          } else {
+            resp.text().then(function(text) {
+              containerLoading.innerHTML = '<h4>'+text+'</h4>';
+            })
+          }
         }).catch(err => {
-          console.log(err);
+          containerLoading.innerHTML = '<h4>'+err+'</h4>';
         });
+      };
+
+      linkAll.addEventListener("click", loadAll);
+      linkNotUseds.addEventListener('click', loadUnused);
+      submitButton.addEventListener('click', verify);
 
     </script>
   </body>
