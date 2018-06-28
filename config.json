@@ -12,9 +12,11 @@
     "language.",
     "order.checkout.orderprocessor.",
     "placeholders.",
+    "products.review.steps.sales_page.help.",
     "providers.",
     "status.",
     "subcategory.",
-    "tracking_pixel.provider."
+    "tracking_pixel.provider.",
+    "upload.validation."
   ]
 }

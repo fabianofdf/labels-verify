@@ -49,66 +49,68 @@
       </div>
       <ul class="list-group" id="list"></ul>
     </div>
+
     <script type="text/javascript">
-      const ge = id => document.getElementById(id);
-      let totalLabels = ge('total_labels');
-      let totalWords = ge('total_words');
-      let list = ge('list');
-      let linkAll = ge('filter-all');
-      let linkNotUseds = ge('filter-not-useds');
-      let containerLoading = ge('loading');
-      let containerResult = ge('result');
-      let submitButton = ge('submit');
+      const ge = id => document.getElementById(id)
+      let foundLabels
+      let currentLabels
 
-      ge('langPath').value = localStorage.getItem('langPath') || '';
-      ge('baseDirPath').value = localStorage.getItem('baseDirPath') || "";
+      const setLoading = opt => {
+        const containerResult = ge('result')
+        const containerLoading = ge('loading')
 
-      let labels;
-      let currentLabels;
-
-      let setLoading = (opt) => {
         if (opt) {
-          containerLoading.className = 'container d-block';
-          containerLoading.innerHTML = '<h4>Verifying...</h4>';
-          containerResult.className = 'container d-none';
+          containerLoading.className = 'container d-block'
+          containerLoading.innerHTML = '<h4>Verifying...</h4>'
+          containerResult.className = 'container d-none'
         } else {
-          containerLoading.className = 'container d-none';
-          containerResult.className = 'container d-block';
+          containerLoading.className = 'container d-none'
+          containerResult.className = 'container d-block'
         }
-      };
+      }
 
-      let loadList = () => {
-        totalLabels.innerHTML = currentLabels.length;
+      const printCurrentLabelsList = () => {
+        const totalLabels = ge('total_labels')
+        const totalWords = ge('total_words')
+        const list = ge('list')
+
+        totalLabels.innerHTML = currentLabels.length
         totalWords.innerHTML = currentLabels.reduce((total, item) => {
-          total += item.text.split(" ").length;
-          return total;
-        }, 0);
+          total += item.text.split(" ").length
+          return total
+        }, 0)
         list.innerHTML = currentLabels.reduce((html, item) => (
           html+=`
             <li class="list-group-item">
               <span><strong>${item.label}</strong> - ${item.text}</span>
               <span class="badge badge-${item.uses ? 'success' : 'warning'}">${item.uses}</span>
             </li>`
-        ), '');
-        setLoading(false);
-      };
+        ), '')
+        setLoading(false)
+      }
 
-      let loadAll = () => {
-        currentLabels = labels;
-        loadList();
-      };
+      const printAllLabels = () => {
+        currentLabels = foundLabels
+        printCurrentLabelsList()
+      }
 
-      let loadUnused = () => {
-        currentLabels = labels.filter(item => item.uses === 0);
-        loadList();
-      };
+      const printUnusedLabels = () => {
+        currentLabels = foundLabels.filter(({ uses }) => uses === 0)
+        printCurrentLabelsList()
+      }
 
-      let verify = () => {
-        localStorage.setItem('langPath', form.langPath.value);
-        localStorage.setItem('baseDirPath', form.baseDirPath.value);
+      const setLocalStorage = () => {
+        localStorage.setItem('langPath', form.langPath.value)
+        localStorage.setItem('baseDirPath', form.baseDirPath.value)
+      }
 
-        setLoading(true);
-        fetch('/analyse',{
+      const setFormByLocalStorage = () => {
+        form.langPath.value = localStorage.getItem('langPath') || ''
+        form.baseDirPath.value = localStorage.getItem('baseDirPath') || ''
+      }
+
+      const verify = () => {
+        const fetchParams = {
           method: "post",
           headers: {
             'Accept': 'application/json',
@@ -118,26 +120,40 @@
             langPath: form.langPath.value,
             baseDirPath: form.baseDirPath.value
           })
-        }).then(resp => {
+        }
+
+        const processSuccess = resp => {
           if(resp.ok){
             resp.json().then(function(resp) {
-              labels = resp
-              loadUnused();
+              foundLabels = resp
+              printUnusedLabels()
             })
           } else {
             resp.text().then(function(text) {
-              containerLoading.innerHTML = '<h4>'+text+'</h4>';
+              processErro(text)
             })
           }
-        }).catch(err => {
-          containerLoading.innerHTML = '<h4>'+err+'</h4>';
-        });
-      };
+        }
 
-      linkAll.addEventListener("click", loadAll);
-      linkNotUseds.addEventListener('click', loadUnused);
-      submitButton.addEventListener('click', verify);
+        const processErro = errorText => {
+          ge('loading').innerHTML = '<h4>'+errorText+'</h4>'
+        }
 
+        setLocalStorage()
+        setLoading(true)
+        fetch('/analyse', fetchParams)
+          .then(processSuccess)
+          .catch(processErro)
+      }
+
+      const init = () => {
+        ge('filter-all').addEventListener("click", printAllLabels)
+        ge('filter-not-useds').addEventListener('click', printUnusedLabels)
+        ge('submit').addEventListener('click', verify)
+        setFormByLocalStorage()
+      }
+
+      window.addEventListener('load', init)
     </script>
   </body>
 </html>

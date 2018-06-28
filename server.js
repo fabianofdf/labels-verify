@@ -1,17 +1,18 @@
-var host = "127.0.0.1";
-var port = 8080;
+var { analyse } = require("./lib/main.js");
 var express = require("express");
-var main = require("./lib/main.js");
 var exec = require('child_process').exec
 var bodyParser = require('body-parser');
 
 var app = express();
+var host = "127.0.0.1";
+var port = 8080;
 
 app.use(bodyParser.json());
 app.use(express.static(__dirname + "/app")); //use static files in ROOT/public folder
 
 app.post("/analyse", function(req, res){
-  main.analyse(req.body.langPath, req.body.baseDirPath)
+  const { langPath, baseDirPath } = req.body
+  analyse(langPath, baseDirPath)
     .then(labels => {
       res.header("Content-Type", "text/json");
       res.send(labels);
