@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "Verify i18n labels that aren't used any more",
   "main": "lib/main.js",
+  "bin": {
+    "i18nverify": "bin/main.js"
+  },
   "scripts": {
     "start": "node server",
     "test": "echo \"Error: no test specified\" && exit 1"
