@@ -16,7 +16,7 @@ const MAX_NUMBER_LABELS_ALLOWED = options['max-labels']
 const HIDE_FOUND_LABELS = options['hide-found-labels']
 
 console.log('');
-console.log(' I18N-VERIFY '.bgBlue, ' START '.bgYellow)
+console.log(' LABELS-VERIFY '.bgBlue, ' START '.bgYellow)
 
 const labels = analyse(LANG_PATH, BASE_DIR_PATH, ignoreLabels)
 const unusedLabels = labels.filter(({ uses }) => uses === 0)
@@ -41,6 +41,6 @@ if (exceededMaxAllowed) {
   process.exitCode = 1
 }
 
-console.log(' I18N-VERIFY '.bgBlue, (exceededMaxAllowed ? ' FAIL '.bgRed : ' PASSED '.bgGreen), '\n')
+console.log(' LABELS-VERIFY '.bgBlue, (exceededMaxAllowed ? ' FAIL '.bgRed : ' PASSED '.bgGreen), '\n')
 
 process.exit()

@@ -27,7 +27,7 @@ app.post("/analyse", function(req, res){
 
 app.listen(port, host);
 
-console.log("i18n Verify Server running in localhost:"+port+"!");
+console.log("Labels Verify Server running in localhost:"+port+"!");
 
 var command = 'open';
 (process.platform === 'linux') && (command='xdg-open');

@@ -1,17 +1,16 @@
 {
-  "name": "i18n_verify",
+  "name": "labels_verify",
   "version": "1.0.0",
-  "description": "Verify i18n labels that aren't used any more",
+  "description": "Verify labels that aren't used any more",
   "main": "lib/main.js",
   "bin": {
-    "i18nverify": "bin/cli.js"
+    "labels-verify": "bin/cli.js"
   },
   "scripts": {
     "start": "node server",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
-    "i18n",
     "labels",
     "verify"
   ],
