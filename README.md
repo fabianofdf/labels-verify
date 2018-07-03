@@ -1,5 +1,5 @@
-# i18n-verify
-Verify i18n labels that aren't used any more
+# labels-verify
+Verify labels that aren't used any more
 
 ## Instructions
 * Run
