@@ -24,7 +24,8 @@ const foundNumber = unusedLabels.length
 const exceededMaxAllowed = foundNumber > MAX_NUMBER_LABELS_ALLOWED
 
 if (!HIDE_FOUND_LABELS) {
-  console.log('\n', 'Unused labels:'.yellow, '\n');
+  console.log('');
+  console.log('Unused labels:'.yellow, '\n');
 
   unusedLabels.map(({ label, text }) => {
     console.log(colors.red(label), `- ${text}`);
