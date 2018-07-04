@@ -2,13 +2,11 @@ const colors = require('colors')
 
 exports.Logger = class Logger {
   static start() {
-    console.log('');
-    console.log(' LABELS-VERIFY '.bgBlue, ' START '.bgYellow)
+    console.log('\n LABELS-VERIFY '.bgBlue, ' START '.bgYellow)
   }
 
   static unusedLabels(labels) {
-    console.log('');
-    console.log('Unused labels:'.yellow, '\n');
+    console.log('\nUnused labels:'.yellow, '\n');
 
     labels.map(({ label, text }) => {
       console.log(colors.red(label), `- ${text}`);
@@ -16,17 +14,15 @@ exports.Logger = class Logger {
   }
 
   static result(max, found, fail) {
-    console.log('');
-    console.log(`${colors.yellow('Max number of unused labels allowed')}: ${max}`)
+    console.log(`\n${colors.yellow('Max number of unused labels allowed')}: ${max}`)
     console.log(`${colors.yellow('Number of unused labels found')}: ${fail ? colors.red(found) : found}`);
 
     if (fail) {
-      console.log('Maybe you need to put them on ignore label list.'.gray);
+      console.log('\nMaybe you need to put them on ignore label list.'.gray);
     }
   }
 
   static end(fail){
-    console.log('');
-    console.log(' LABELS-VERIFY '.bgBlue, (fail ? ' FAIL '.bgRed : ' PASSED '.bgGreen), '\n')
+    console.log('\n LABELS-VERIFY '.bgBlue, (fail ? ' FAIL '.bgRed : ' PASSED '.bgGreen), '\n')
   }
 }
