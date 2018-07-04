@@ -1,47 +1,47 @@
 #! /usr/bin/env node
-const { analyse } = require("../lib/main.js")
-const { ignoreLabels } = require('../config.json')
-const colors = require('colors')
+const { labelsVerify } = require("../lib/main.js")
+const { Logger } = require("./logger.js")
+const fs = require('fs')
 const commandLineArgs = require('command-line-args')
 
-const options = commandLineArgs([
-  { name: 'lang-path', defaultValue: '', type: String },
-  { name: 'base-dir-path', defaultValue: '', type: String },
-  { name: 'max-labels', defaultValue: 0, type: Number },
-  { name: 'hide-found-labels', defaultValue: false, type: Boolean }
+const CONFIG_FILE_NAME = '.labelsverify'
+
+const args = commandLineArgs([
+  { name: 'lang-path', type: String },
+  { name: 'base-dir-path', type: String },
+  { name: 'max-labels', type: Number },
+  { name: 'hide-found-labels', type: Boolean },
+  { name: 'settings-path', defaultValue: CONFIG_FILE_NAME, type: String }
 ])
-const LANG_PATH = options['lang-path']
-const BASE_DIR_PATH = options['base-dir-path']
-const MAX_NUMBER_LABELS_ALLOWED = options['max-labels']
-const HIDE_FOUND_LABELS = options['hide-found-labels']
 
-console.log('');
-console.log(' LABELS-VERIFY '.bgBlue, ' START '.bgYellow)
+let settings = {}
 
-const labels = analyse(LANG_PATH, BASE_DIR_PATH, ignoreLabels)
+if (fs.existsSync(args['settings-path'])) {
+  settings = JSON.parse(fs.readFileSync(args['settings-path'], 'utf-8'))
+}
+
+const LANG_PATH = args['lang-path'] || settings.langPath || ''
+const BASE_DIR_PATH = args['base-dir-path'] || settings.baseDirPath || ''
+const MAX_NUMBER_LABELS_ALLOWED = args['max-labels'] || settings.maxLabels || ''
+const HIDE_FOUND_LABELS = args['hide-found-labels'] || settings.hideFoundLabels || false
+const IGNORE_LABELS = settings.ignoreLabels || []
+
+Logger.start()
+
+const labels = labelsVerify(LANG_PATH, BASE_DIR_PATH, IGNORE_LABELS)
 const unusedLabels = labels.filter(({ uses }) => uses === 0)
 const foundNumber = unusedLabels.length
 const exceededMaxAllowed = foundNumber > MAX_NUMBER_LABELS_ALLOWED
 
 if (!HIDE_FOUND_LABELS) {
-  console.log('');
-  console.log('Unused labels:'.yellow, '\n');
-
-  unusedLabels.map(({ label, text }) => {
-    console.log(colors.red(label), `- ${text}`);
-  })
+  Logger.unusedLabels(unusedLabels)
 }
 
-console.log(`
-${colors.yellow('Max number of unused labels allowed')}: ${MAX_NUMBER_LABELS_ALLOWED}
-${colors.yellow('Number of unused labels found')}: ${exceededMaxAllowed ? colors.red(foundNumber) : foundNumber}
-`);
+Logger.result(MAX_NUMBER_LABELS_ALLOWED, foundNumber, exceededMaxAllowed)
+Logger.end(exceededMaxAllowed)
 
 if (exceededMaxAllowed) {
-  console.log('Maybe you need to put them on ignore label list.'.gray, '\n');
-  process.exitCode = 1
+  process.exit(1)
 }
-
-console.log(' LABELS-VERIFY '.bgBlue, (exceededMaxAllowed ? ' FAIL '.bgRed : ' PASSED '.bgGreen), '\n')
 
 process.exit()
