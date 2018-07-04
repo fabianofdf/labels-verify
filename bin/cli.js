@@ -21,7 +21,7 @@ if (!HIDE_FOUND_LABELS) {
 }
 
 Logger.result(MAX_NUMBER_LABELS_ALLOWED, foundNumber, exceededMaxAllowed)
-Logger.end(exceededMaxAllowed)
+Logger.end(!exceededMaxAllowed)
 
 if (exceededMaxAllowed) {
   process.exit(1)
