@@ -32,7 +32,7 @@ exports.Logger = class Logger {
       const argLength = (name.length + alias.length + 20)
       return maxlength > argLength ? maxlength : argLength
     }, 0)
-console.log(PAD_SIZE);
+
     console.log(`\n${LIB_TITLE} ${colors.bgMagenta(' ARGUMENTS ')}\n`);
 
     commands.forEach(({name, alias, description}) => {
