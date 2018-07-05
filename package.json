@@ -2,6 +2,7 @@
   "name": "labels_verify",
   "version": "1.0.0",
   "description": "Verify labels that aren't used any more",
+  "repository": "https://github.com/fabianofdf/labels-verify",
   "main": "lib/main.js",
   "bin": {
     "labels-verify": "bin/cli.js"

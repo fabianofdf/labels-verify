@@ -32,14 +32,18 @@ exports.Logger = class Logger {
 
   static help(commands = []){
     const PAD_SIZE = commands.reduce((maxlength, {name = '', alias = ''}) => {
-      const argLength = (name.length + alias.length + 20)
+      const argLength = (name.length + alias.length)
       return maxlength > argLength ? maxlength : argLength
     }, 0)
 
     console.log(`\n${LIB_TITLE} ${colors.bgMagenta(' ARGUMENTS ')}\n`)
 
     commands.forEach(({name, alias, description}) => {
-      console.log(`  --${colors.yellow(name)} ${(alias ? `-${colors.yellow(alias)}` : '')}`.padEnd(PAD_SIZE), `${(description ? description : '')}`)
+      name = ` --${name}`
+      alias = alias ? ` -${alias}` : ''
+      const fullName = `${alias}${name}`.padEnd(PAD_SIZE + 5)
+
+      console.log(fullName, description)
     })
 
     console.log('')

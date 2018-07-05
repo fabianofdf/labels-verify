@@ -18,13 +18,13 @@ if (fs.existsSync(CONFIG_FILE_PATH)) {
 }
 
 const options = [
-  { name: 'labels-path',       type: String,  defaultValue: (settingsByFile.labelsPath || ''), description: 'JSON file path with labels that you want to verify' },
-  { name: 'base-dir-path',     type: String,  defaultValue: (settingsByFile.baseDirPath || ''), description: '' },
-  { name: 'max-labels',        type: Number,  defaultValue: (settingsByFile.maxLabels || -1), description: '' },
-  { name: 'hide-found-labels', type: Boolean, defaultValue: (settingsByFile.hideFoundLabels || false), description: '' },
-  { name: 'ignore-labels',     type: String,  defaultValue: (settingsByFile.ignoreLabels || []), multiple: true, description: '' },
-  { name: 'settings-path',     type: String,  defaultValue: CONFIG_FILE_PATH_DEFAULT, description: '' },
-  { name: 'help',              type: Boolean, alias: 'h' }
+  { name: 'labels-path',       type: String,  defaultValue: (settingsByFile.labelsPath || ''),          description: '- JSON file path with labels that you want to verify.' },
+  { name: 'base-dir-path',     type: String,  defaultValue: (settingsByFile.baseDirPath || ''),         description: '- Root directory that you want to verify. It\'s a deep verify.' },
+  { name: 'max-labels',        type: Number,  defaultValue: (settingsByFile.maxLabels || -1),           description: '- Max labels that you allowed.' },
+  { name: 'hide-found-labels', type: Boolean, defaultValue: (settingsByFile.hideFoundLabels || false),  description: '- Hide labels found. Default: false' },
+  { name: 'ignore-labels',     type: String,  defaultValue: (settingsByFile.ignoreLabels || []),        description: '- List of ignore labels.', multiple: true },
+  { name: 'settings-path',     type: String,  defaultValue: CONFIG_FILE_PATH_DEFAULT,                   description: '- Path of settings file. Default: .labelsverifyrc on root path.' },
+  { name: 'help',              type: Boolean, alias: 'h',                                               description: '- Show the lib options.' }
 ]
 const args = commandLineArgs(options, { partial: true })
 
