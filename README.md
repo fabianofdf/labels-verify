@@ -3,7 +3,7 @@ Verify labels that aren't used any more
 
 ## CLI
 
-![alt text](https://github.com/fabianofdf/labels-verify/public/cli-help.png)
+![alt text](https://github.com/fabianofdf/labels-verify/blob/master/public/cli-help.png)
 
 ## Instructions to run App
 * Run
