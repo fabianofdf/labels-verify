@@ -18,6 +18,7 @@ labels-verify --labels-path ./languages/lang-pt-br.json --base-dir-path ./src --
 ```
 ![alt text](https://github.com/fabianofdf/labels-verify/blob/master/public/doc/cli-sample-2.png)
 
+#### Run as a NPM script
 ```sh
 npm run labels-verify
 ```
