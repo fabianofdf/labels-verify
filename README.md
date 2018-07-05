@@ -29,7 +29,8 @@ Root path or set path by `--settings-path ./my_config/.labelsverifyrc`
 
 ![alt text](https://github.com/fabianofdf/labels-verify/blob/master/public/doc/cli-settings-file.png)
 
-## Instructions to run App
+## App - Web application
+#### Instructions to run App
 * Run
 ```sh
 npm install
@@ -40,3 +41,5 @@ npm start
 ```
 
 * Access - [localhost:8080](http://localhost:8080)
+
+![alt text](https://github.com/fabianofdf/labels-verify/blob/master/public/doc/app.png)

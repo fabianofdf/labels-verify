@@ -1,8 +1,7 @@
-var { analyse } = require("./lib/main.js")
+var { labelsVerify } = require("./lib/main.js")
 var express = require("express")
 var exec = require('child_process').exec
 var bodyParser = require('body-parser')
-const config = require('./config.json')
 
 var app = express()
 var host = "127.0.0.1"
@@ -15,7 +14,7 @@ app.post("/analyse", function(req, res){
   const { langPath, baseDirPath } = req.body
 
   try {
-    const labels = analyse(langPath, baseDirPath, config.ignoreLabels)
+    const labels = labelsVerify(langPath, baseDirPath, [])
     res.header("Content-Type", "text/json");
     res.send(labels);
   } catch (err) {
