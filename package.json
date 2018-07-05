@@ -2,21 +2,30 @@
   "name": "labels_verify",
   "version": "1.0.0",
   "description": "Verify labels that aren't used any more",
-  "repository": "https://github.com/fabianofdf/labels-verify",
+  "keywords": [
+    "labels",
+    "unused labels",
+    "find labels",
+    "verify labels"
+  ],
+  "bugs": {
+    "url": "https://github.com/fabianofdf/labels-verify/issues",
+    "email": "fabianofdf@gmail.com"
+  },
+  "license": "MIT",
+  "author": "Fabiano Fonseca de Freitas <fabianofdf@gmail.com> (http://fabianofonsecafreitas.com.br/)",
   "main": "lib/main.js",
   "bin": {
     "labels-verify": "bin/cli.js"
   },
+  "repository": "https://github.com/fabianofdf/labels-verify",
   "scripts": {
     "start": "node server",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [
-    "labels",
-    "verify"
-  ],
-  "author": "Fabiano Fonseca de Freitas",
-  "license": "MIT",
+  "config": {
+    "port": "8080"
+  },
   "dependencies": {
     "body-parser": "^1.18.2",
     "colors": "^1.3.0",

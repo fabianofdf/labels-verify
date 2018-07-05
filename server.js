@@ -5,7 +5,7 @@ var bodyParser = require('body-parser')
 
 var app = express()
 var host = "127.0.0.1"
-var port = 8080
+var port = process.env.npm_package_config_port
 
 app.use(bodyParser.json());
 app.use(express.static(__dirname + "/app")); //use static files in ROOT/public folder
