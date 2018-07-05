@@ -6,6 +6,7 @@ const { args } = require("./args.js")
 const LABELS_PATH = args['labels-path']
 const BASE_DIR_PATH = args['base-dir-path']
 const MAX_NUMBER_LABELS_ALLOWED = args['max-labels']
+const CHECK_MAX_ALLOWED = MAX_NUMBER_LABELS_ALLOWED > -1
 const HIDE_FOUND_LABELS = args['hide-found-labels']
 const IGNORE_LABELS = args['ignore-labels']
 
@@ -20,10 +21,19 @@ if (!HIDE_FOUND_LABELS) {
   Logger.unusedLabels(unusedLabels)
 }
 
-Logger.result(MAX_NUMBER_LABELS_ALLOWED, foundNumber, exceededMaxAllowed)
-Logger.end(!exceededMaxAllowed)
+Logger.numberUnusedLabels(foundNumber)
 
-if (exceededMaxAllowed) {
+if (CHECK_MAX_ALLOWED) {
+  Logger.maxAllowed(MAX_NUMBER_LABELS_ALLOWED)
+
+  if (exceededMaxAllowed) {
+    Logger.info()
+  }
+}
+
+Logger.end(!CHECK_MAX_ALLOWED || !exceededMaxAllowed)
+
+if (exceededMaxAllowed && CHECK_MAX_ALLOWED) {
   process.exit(1)
 }
 

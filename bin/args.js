@@ -20,7 +20,7 @@ if (fs.existsSync(CONFIG_FILE_PATH)) {
 const options = [
   { name: 'labels-path',       type: String,  defaultValue: (settingsByFile.labelsPath || ''), description: 'JSON file path with labels that you want to verify' },
   { name: 'base-dir-path',     type: String,  defaultValue: (settingsByFile.baseDirPath || ''), description: '' },
-  { name: 'max-labels',        type: Number,  defaultValue: (settingsByFile.maxLabels || 0), description: '' },
+  { name: 'max-labels',        type: Number,  defaultValue: (settingsByFile.maxLabels || -1), description: '' },
   { name: 'hide-found-labels', type: Boolean, defaultValue: (settingsByFile.hideFoundLabels || false), description: '' },
   { name: 'ignore-labels',     type: String,  defaultValue: (settingsByFile.ignoreLabels || []), multiple: true, description: '' },
   { name: 'settings-path',     type: String,  defaultValue: CONFIG_FILE_PATH_DEFAULT, description: '' },
@@ -37,6 +37,11 @@ if (args._unknown) {
 if (args.help) {
   Logger.help(options)
   process.exit()
+}
+
+if (!args['labels-path'] || !args['base-dir-path']) {
+  Logger.error('These params are required: --labels-path, --base-dir-path')
+  process.exit(1)
 }
 
 exports.args = args
