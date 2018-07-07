@@ -1,7 +1,7 @@
 # labels-verify
 It is a library that allows you to check labels that aren't used anymore
 
-## CLI
+## 1 - CLI
 
 ```sh
 labels-verify -h
@@ -30,8 +30,14 @@ Root path or set path by `--settings-path ./my_config/.labelsverifyrc`
 
 ![alt text](https://github.com/fabianofdf/labels-verify/raw/master/public/doc/cli-settings-file.png)
 
-## App - Web application
+## 2 - Node Module
+
+![alt text](https://github.com/fabianofdf/labels-verify/raw/master/public/doc/module.png)
+
+## 3 - App - Web application
 #### Instructions to run App
+* Clone the project at [https://github.com/fabianofdf/labels-verify.git](https://github.com/fabianofdf/labels-verify.git)
+
 * Run
 ```sh
 npm install

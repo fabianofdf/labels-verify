@@ -1,7 +1,7 @@
 {
   "name": "labels-verify",
   "version": "1.0.0",
-  "description": "Verify labels that aren't used any more",
+  "description": "It is a library that allows you to check labels that aren't used anymore",
   "keywords": [
     "labels",
     "unused labels",
