@@ -1,6 +1,6 @@
 {
-  "name": "labels_verify",
-  "version": "1.0.1",
+  "name": "labels-verify",
+  "version": "1.0.0",
   "description": "Verify labels that aren't used any more",
   "keywords": [
     "labels",

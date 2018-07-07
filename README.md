@@ -1,5 +1,5 @@
 # labels-verify
-Verify labels that aren't used any more
+It is a library that allows you to check labels that aren't used anymore
 
 ## CLI
 

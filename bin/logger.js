@@ -36,8 +36,9 @@ exports.Logger = class Logger {
       return maxlength > argLength ? maxlength : argLength
     }, 0)
 
-    console.log(`\n${LIB_TITLE} ${colors.bgMagenta(' ARGUMENTS ')}\n`)
-
+    console.log(`\n${LIB_TITLE} ${colors.bgCyan(' HELP ')}\n`)
+    console.log(colors.white(' It is a library that allows you to check labels that aren\'t used anymore.'), '\n');
+    console.log(colors.cyan(' Arguments'), '\n');
     commands.forEach(({name, alias, description}) => {
       name = ` --${name}`
       alias = alias ? ` -${alias}` : ''
@@ -46,6 +47,7 @@ exports.Logger = class Logger {
       console.log(fullName, description)
     })
 
+    console.log('\n', colors.cyan('Documentation on:'), colors.blue('https://github.com/fabianofdf/labels-verify'));
     console.log('')
   }
 

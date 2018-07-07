@@ -11,10 +11,10 @@ app.use(bodyParser.json());
 app.use(express.static(__dirname + "/app")); //use static files in ROOT/public folder
 
 app.post("/analyse", function(req, res){
-  const { langPath, baseDirPath } = req.body
+  const { labelsPath, baseDirPath } = req.body
 
   try {
-    const labels = labelsVerify(langPath, baseDirPath, [])
+    const labels = labelsVerify(labelsPath, baseDirPath, [])
     res.header("Content-Type", "text/json");
     res.send(labels);
   } catch (err) {

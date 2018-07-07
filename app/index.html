@@ -19,18 +19,18 @@
     <div class="header">
       <div class="container">
         <h1 class="display-5">Labels Verify</h1>
-        <p>Verify labels that aren't used any more</p>
+        <p>It is a library that allows you to check labels that aren't used anymore</p>
       </div>
     </div>
     <div class="container form">
       <form id="form">
         <div class="form-group">
-          <label for="langPath">Lang File Path</label>
-          <input type="text" class="form-control" id="langPath" name="langPath" placeholder="e.g. /home/projects/hotmart/hot-vulcano/languages/pt-BR.i18n.json">
+          <label for="labelsPath">Labels File Path</label>
+          <input type="text" class="form-control" id="labelsPath" name="labelsPath" placeholder="e.g. /home/projects/my-project/languages/pt-br.json">
         </div>
         <div class="form-group">
           <label for="baseDirPath">Root Directory Path</label>
-          <input type="text" class="form-control" id="baseDirPath" name="baseDirPath" placeholder="e.g. /home/projects/hotmart/hot-vulcano/imports/client">
+          <input type="text" class="form-control" id="baseDirPath" name="baseDirPath" placeholder="e.g. /home/projects/my-project/src">
         </div>
         <button type="button" id="submit" class="btn btn-primary">Submit</button>
       </form>
@@ -100,12 +100,12 @@
       }
 
       const setLocalStorage = () => {
-        localStorage.setItem('langPath', form.langPath.value)
+        localStorage.setItem('labelsPath', form.labelsPath.value)
         localStorage.setItem('baseDirPath', form.baseDirPath.value)
       }
 
       const setFormByLocalStorage = () => {
-        form.langPath.value = localStorage.getItem('langPath') || ''
+        form.labelsPath.value = localStorage.getItem('labelsPath') || ''
         form.baseDirPath.value = localStorage.getItem('baseDirPath') || ''
       }
 
@@ -117,7 +117,7 @@
             'Content-Type': 'application/json'
           },
           body: JSON.stringify({
-            langPath: form.langPath.value,
+            labelsPath: form.labelsPath.value,
             baseDirPath: form.baseDirPath.value
           })
         }
