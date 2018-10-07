@@ -53,3 +53,5 @@ npm start
 * Access - [localhost:8080](http://localhost:8080)
 
 ![alt text](https://github.com/fabianofdf/labels-verify/raw/master/public/doc/app.png)
+
+[npm-url]: https://npmjs.org/package/request-hash
