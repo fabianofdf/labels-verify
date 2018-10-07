@@ -1,7 +1,5 @@
 # labels-verify
 
-[![NPM version]][npm-url]
-
 > It is a library that allows you to check labels that aren't used anymore
 
 ## 1 - CLI
