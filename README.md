@@ -1,6 +1,6 @@
 # labels-verify
 
-[![NPM version][npm-image]][npm-url]
+[![NPM version]][npm-url]
 
 > It is a library that allows you to check labels that aren't used anymore
 
@@ -54,4 +54,4 @@ npm start
 
 ![alt text](https://github.com/fabianofdf/labels-verify/raw/master/public/doc/app.png)
 
-[npm-url]: https://npmjs.org/package/request-hash
+[npm-url]: https://www.npmjs.com/package/labels-verify
